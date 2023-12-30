@@ -1,30 +1,21 @@
-import { useColorMode, Button } from '@chakra-ui/react';
-import { extendTheme } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
-
-const styles = {
-  global: (props) => ({
-    body: {
-      bg: mode('gray.100', '#000')(props),
-      color: mode('gray.800', 'whiteAlpha.900')(props),
-    },
-  }),
-};
-
-const config = {
-  initialColorMode: 'dark',
-  useSystemColorMode: false,
-};
-
-const theme = extendTheme({ config, styles });
+import { useColorMode, Flex, Text, Switch, useStyleConfig } from '@chakra-ui/react';
 
 const ColorModeToggle = () => {
-  const { toggleColorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode();
+  const styles = useStyleConfig('ColorModeToggle');
 
   return (
-    <Button onClick={toggleColorMode}>
-      Switch {theme.config.initialColorMode === 'dark' ? 'Light' : 'Dark'} Mode
-    </Button>
+    <Flex align="center" {...styles}>
+      <Text fontSize="sm" mr="2">
+        {colorMode === 'dark' ? 'Dark Mode' : 'Light Mode'}
+      </Text>
+      <Switch
+        size="md"
+        onChange={toggleColorMode}
+        isChecked={colorMode === 'dark'}
+        colorScheme="teal"
+      />
+    </Flex>
   );
 };
 

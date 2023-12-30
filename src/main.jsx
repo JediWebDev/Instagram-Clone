@@ -1,27 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-import { mode } from "@chakra-ui/theme-tools";
 import ColorModeToggle from './components/ColorModeToggle/ColorModeToggle.jsx';
 import { extendTheme } from "@chakra-ui/react"; 
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 
-const styles = {
-  global: (props) => ({
-    body: {
-      bg: mode('gray.100', '#000')(props),
-      color: mode('gray.800', 'whiteAlpha.900')(props),
+
+const theme = extendTheme({
+  config: {
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+  },
+  components: {
+    ColorModeToggle: {
+      baseStyle: {
+        // Common styles for both light and dark modes
+      },
+      styles: {
+        dark: {
+          // Styles specific to dark mode
+          backgroundColor: 'black',
+          color: 'white',
+        },
+        light: {
+          // Styles specific to light mode
+          backgroundColor: 'white',
+          color: 'black',
+        },
+      },
     },
-  }),
-};
-
-const config = {
-  initialColorMode: 'dark',
-  useSystemColorMode: false,
-};
-
-const theme = extendTheme({ config, styles });
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
